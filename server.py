@@ -2,8 +2,12 @@ from flask import Flask, request, abort, jsonify, send_from_directory
 import os
 from werkzeug.utils import secure_filename
 from dotenv import load_dotenv
+import logging
+
 
 load_dotenv()
+if os.getenv("LOGFILE") is not None:
+    logging.basicConfig(filename='server.log', level=logging.DEBUG)
 
 UPLOAD_DIRECTORY = f"{os.getcwd()}/api_uploaded_files"
 ALLOWED_KEYS = os.getenv("ALLOWED_KEYS")
