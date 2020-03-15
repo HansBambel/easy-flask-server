@@ -9,6 +9,11 @@
  - to run flask app in debug mode `set FLASK_DEBUG=1` or `export FLASK_DEBUG=1` before running the server.
  - if `LOGFILE` is specified in `.env` the logger will write to that file.
  
+ #### Usage
+ - List uploaded files (No authentication required): GET request to `<server-ip>/files`
+ - Upload files: POST request to `<server-ip>/files/<file-name-with-extension>` with allowed `API-key` in header (file may be renamed due to `secure_filename()`-function from flask)
+ - Download files: GET request to `<server-ip>/files/<file-name-with-extension>` with allowed `API-key` in header
+ 
  #### About
  Uploading and downloading is only possible when the user gives an API-key that is also in the `.env`-file of the server in the `ALLOWED_KEYS`-variable.
  
