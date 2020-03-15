@@ -9,7 +9,7 @@ load_dotenv()
 if os.getenv("LOGFILE") is not None:
     logging.basicConfig(filename='server.log', level=logging.DEBUG)
 
-UPLOAD_DIRECTORY = f"{os.getcwd()}/api_uploaded_files"
+UPLOAD_DIRECTORY = f"{os.getcwd()}/{'api_uploaded_files' if os.getenv('UPLOAD_DIRECTORY') is None else os.getenv('UPLOAD_DIRECTORY')}"
 ALLOWED_KEYS = os.getenv("ALLOWED_KEYS")
 
 if not os.path.exists(UPLOAD_DIRECTORY):
