@@ -39,10 +39,11 @@ def get_file(path):
     return send_from_directory(UPLOAD_DIRECTORY, path, as_attachment=True)
 
 
-@api.route("/files/<filename>", methods=["POST"])
-def post_file(filename):
+@api.route("/files", methods=["POST"])
+def post_file():
     """Upload a file."""
-
+    zipfile = request.files["zip"]
+    filename = secure_filename(zipfile.filename)
     # Check if user has correct key
     user_key = request.headers.get("API-key")
     if user_key not in ALLOWED_KEYS:
@@ -52,8 +53,7 @@ def post_file(filename):
         # Return 400 BAD REQUEST
         abort(400, "no subdirectories directories allowed")
 
-    with open(os.path.join(UPLOAD_DIRECTORY, secure_filename(filename)), "wb") as fp:
-        fp.write(request.data)
+    zipfile.save(os.path.join(UPLOAD_DIRECTORY, filename))
 
     # Return 201 CREATED
     return "Successfully uploaded file.", 201
